@@ -1,0 +1,19 @@
+{
+  "name": "toposhape-v1",
+  "kind": "compete",
+  "workdir": "E:/MV2-Pursuit/work/20261124T113001Z-science/topo",
+  "image": "python:3.12",
+  "setup": ["pip install -q -r requirements.txt"],
+  "run": [
+    "cd /work && python -m py_compile toposhape_core.py toposhape_job.py test_toposhape_core.py && python -m unittest -v test_toposhape_core > /out/tests.txt 2>&1; rc=$?; cat /out/tests.txt; exit $rc",
+    "cd /work && pip freeze | grep -iE '^(numpy|pythia8mc)==' | tee /out/versions.txt && sha256sum toposhape_core.py toposhape_job.py test_toposhape_core.py PREREG-TOPO-v0.2.md requirements.txt | tee /out/sha256.txt",
+    "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python toposhape_job.py --probe --n-events 300 --out-dir /out/probe > /out/probe.txt 2>&1; rc=$?; grep -E '^TOPO_' /out/probe.txt; tail -n 20 /out/probe.txt; exit $rc",
+    "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python toposhape_job.py --n-events 300000 --workers 2 --out-dir /out > /out/run.txt 2>&1; rc=$?; grep -E '^TOPO_' /out/run.txt; tail -n 30 /out/run.txt; exit $rc"
+  ],
+  "network": true,
+  "data_urls": [],
+  "data_key": "toposhape-pythia",
+  "cpu": 2,
+  "memory_gb": 2,
+  "timeout_minutes": 300
+}
