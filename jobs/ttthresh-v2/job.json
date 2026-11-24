@@ -1,0 +1,23 @@
+{
+  "name": "ttthresh-v2",
+  "kind": "compete",
+  "workdir": "E:\\MV2-Pursuit\\work\\20261124T034832Z-science\\ttthresh-v2",
+  "image": "python:3.12",
+  "setup": [
+    "pip install -q -r requirements.txt"
+  ],
+  "run": [
+    "cd /work && python -m py_compile fix_ttthresh.py test_fix_ttthresh.py && python -m unittest -v test_fix_ttthresh > /out/fix_tests.txt 2>&1; rc=$?; cat /out/fix_tests.txt; exit $rc",
+    "cd /work && python fix_ttthresh.py --dest /work/src --reqs /work/requirements.txt > /out/fix.txt 2>&1; rc=$?; cat /out/fix.txt; exit $rc",
+    "cd /work/src && python -m py_compile ttthresh_core.py ttthresh_job.py test_ttthresh_core.py > /out/compile.txt 2>&1; rc=$?; cat /out/compile.txt; exit $rc",
+    "cd /work/src && python -m unittest -v test_ttthresh_core > /out/tests.txt 2>&1; rc=$?; cat /out/tests.txt; exit $rc",
+    "cd /work && sha256sum fix_ttthresh.py test_fix_ttthresh.py AMENDMENT-0.1.1.md requirements.txt src/ttthresh_core.py src/ttthresh_job.py src/test_ttthresh_core.py src/PREREG-v0.1.md src/requirements.txt | tee /out/sha256.txt",
+    "cd /work/src && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python ttthresh_job.py --data-dir /data --out /out > /out/run.txt 2>&1; rc=$?; grep -E '^TT_' /out/run.txt; tail -n 40 /out/run.txt; exit $rc"
+  ],
+  "network": true,
+  "data_urls": [],
+  "data_key": "atlas13tev25-2j2lmet30",
+  "cpu": 2,
+  "memory_gb": 3,
+  "timeout_minutes": 240
+}
