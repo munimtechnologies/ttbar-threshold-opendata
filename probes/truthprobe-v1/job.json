@@ -1,0 +1,17 @@
+{
+  "name": "truthprobe-v1",
+  "kind": "compete",
+  "workdir": "E:/MV2-Pursuit/work/20261124T100542Z-science/truthprobe",
+  "image": "python:3.12",
+  "setup": ["pip install -q -r requirements.txt"],
+  "run": [
+    "cd /work && python -m py_compile truthprobe.py && pip freeze | grep -iE '^(numpy|awkward|uproot|fsspec|aiohttp)==' | tee /out/versions.txt && sha256sum truthprobe.py requirements.txt | tee /out/sha256.txt",
+    "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python truthprobe.py --data-dir /data --out-dir /out > /out/stdout_probe.txt 2>&1; rc=$?; grep -E '^TPROBE_' /out/stdout_probe.txt; tail -n 30 /out/stdout_probe.txt; exit $rc"
+  ],
+  "network": true,
+  "data_urls": [],
+  "data_key": "atlas-physlite-ttbar-probe",
+  "cpu": 1,
+  "memory_gb": 1.5,
+  "timeout_minutes": 120
+}
