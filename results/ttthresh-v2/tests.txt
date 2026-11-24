@@ -1,0 +1,26 @@
+test_gate_fail_blocks_verdicts (test_ttthresh_core.Grade.test_gate_fail_blocks_verdicts) ... ok
+test_generator_envelope (test_ttthresh_core.Grade.test_generator_envelope) ... ok
+test_injected_threshold_excess (test_ttthresh_core.Grade.test_injected_threshold_excess) ... ok
+test_null (test_ttthresh_core.Grade.test_null) ... ok
+test_residual_nonprompt_added (test_ttthresh_core.Grade.test_residual_nonprompt_added) ... ok
+test_hist2_empty (test_ttthresh_core.Histos.test_hist2_empty) ... ok
+test_hist2_overflow_and_edges (test_ttthresh_core.Histos.test_hist2_overflow_and_edges) ... ok
+test_quantile_bin (test_ttthresh_core.Histos.test_quantile_bin) ... ok
+test_back_to_back_mass (test_ttthresh_core.Kinematics.test_back_to_back_mass) ... ok
+test_delta_phi_wraps (test_ttthresh_core.Kinematics.test_delta_phi_wraps) ... ok
+test_event_vars (test_ttthresh_core.Kinematics.test_event_vars) ... ok
+test_negative_m2_clipped (test_ttthresh_core.Kinematics.test_negative_m2_clipped) ... ok
+test_llvv_keys_assigned (test_ttthresh_core.LlvvFix.test_llvv_keys_assigned) ... ok
+test_version (test_ttthresh_core.LlvvFix.test_version) ... ok
+test_cuts (test_ttthresh_core.Selection.test_cuts) ... ok
+test_data_weight_one (test_ttthresh_core.Selection.test_data_weight_one) ... ok
+test_rules_unique (test_ttthresh_core.Selection.test_rules_unique) ... ok
+test_asym_binomial (test_ttthresh_core.Stats.test_asym_binomial) ... ok
+test_asym_empty (test_ttthresh_core.Stats.test_asym_empty) ... ok
+test_gate (test_ttthresh_core.Stats.test_gate) ... ok
+test_verdicts (test_ttthresh_core.Stats.test_verdicts) ... ok
+
+----------------------------------------------------------------------
+Ran 21 tests in 0.394s
+
+OK

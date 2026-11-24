@@ -1,0 +1,12 @@
+test_apply_patches_on_synthetic_job (test_fix_ttthresh.Fix.test_apply_patches_on_synthetic_job) ... ok
+test_apply_patches_on_synthetic_test (test_fix_ttthresh.Fix.test_apply_patches_on_synthetic_test) ... ok
+test_git_blob_sha1_known_values (test_fix_ttthresh.Fix.test_git_blob_sha1_known_values) ... ok
+test_new_rule_does_not_touch_other_groups (test_fix_ttthresh.Fix.test_new_rule_does_not_touch_other_groups) ... ok
+test_old_rule_misses_ww_new_rule_catches_it (test_fix_ttthresh.Fix.test_old_rule_misses_ww_new_rule_catches_it) ... ok
+test_patch_once_requires_exactly_one (test_fix_ttthresh.Fix.test_patch_once_requires_exactly_one) ... ok
+test_untouched_files_have_no_patches (test_fix_ttthresh.Fix.test_untouched_files_have_no_patches) ... ok
+
+----------------------------------------------------------------------
+Ran 7 tests in 0.001s
+
+OK
