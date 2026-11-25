@@ -1,0 +1,39 @@
+{
+ "source": "E:\\MV2-Pursuit\\work\\20261124T100542Z-science\\compete\\truthprobe\\job.json",
+ "normalized": {
+  "id": "2ac6de597be6",
+  "name": "truthprobe-v1",
+  "job_path": "E:\\MV2-Pursuit\\work\\20261124T100542Z-science\\compete\\truthprobe\\job.json",
+  "run": "20261124T100542Z-science",
+  "field": "science",
+  "kind": "compete",
+  "workdir": "E:\\MV2-Pursuit\\work\\20261124T100542Z-science\\truthprobe",
+  "image": "python:3.12",
+  "run_network": true,
+  "network": true,
+  "setup": [
+   {
+    "name": "setup-01-pip",
+    "cmd": "pip install -q -r requirements.txt",
+    "timeout_seconds": 0
+   }
+  ],
+  "run_steps": [
+   {
+    "name": "run-01-cd",
+    "cmd": "cd /work && python -m py_compile truthprobe.py && pip freeze | grep -iE '^(numpy|awkward|uproot|fsspec|aiohttp)==' | tee /out/versions.txt && sha256sum truthprobe.py requirements.txt | tee /out/sha256.txt",
+    "timeout_seconds": 0
+   },
+   {
+    "name": "run-02-cd",
+    "cmd": "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python truthprobe.py --data-dir /data --out-dir /out > /out/stdout_probe.txt 2>&1; rc=$?; grep -E '^TPROBE_' /out/stdout_probe.txt; tail -n 30 /out/stdout_probe.txt; exit $rc",
+    "timeout_seconds": 0
+   }
+  ],
+  "data_urls": [],
+  "data_key": "atlas-physlite-ttbar-probe",
+  "cpu": 1,
+  "memory_gb": 1.5,
+  "timeout_minutes": 120.0
+ }
+}

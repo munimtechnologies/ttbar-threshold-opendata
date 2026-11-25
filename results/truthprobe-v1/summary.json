@@ -1,0 +1,61 @@
+{
+ "contract": "mv2-compete-result-v1",
+ "name": "truthprobe-v1",
+ "id": "2ac6de597be6",
+ "field": "science",
+ "run": "20261124T100542Z-science",
+ "kind": "compete",
+ "status": "ok",
+ "reason": "",
+ "host": "dell",
+ "image": "python:3.12",
+ "started_at": "2026-11-24T23:44:19.128722+00:00",
+ "finished_at": "2026-11-25T00:11:58.832040+00:00",
+ "duration_seconds": 1659,
+ "limits": {
+  "cpu": 1.0,
+  "memory_gb": 1.5,
+  "timeout_minutes": 120.0
+ },
+ "peak_memory_gb": null,
+ "network": {
+  "setup": true,
+  "run": true
+ },
+ "steps": [
+  {
+   "step": "setup-01-pip",
+   "cmd": "pip install -q -r requirements.txt",
+   "exit": 0,
+   "seconds": 15
+  },
+  {
+   "step": "run-01-cd",
+   "cmd": "cd /work && python -m py_compile truthprobe.py && pip freeze | grep -iE '^(numpy|awkward|uproot|fsspec|aiohttp)==' | tee /out/versions.txt && sha256sum truthprobe.py requirements.txt | tee /out/sha256.txt",
+   "exit": 0,
+   "seconds": 1
+  },
+  {
+   "step": "run-02-cd",
+   "cmd": "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python truthprobe.py --data-dir /data --out-dir /out > /out/stdout_probe.txt 2>&1; rc=$?; grep -E '^TPROBE_' /out/stdout_probe.txt; tail -n 30 /out/stdout_probe.txt; exit $rc",
+   "exit": 0,
+   "seconds": 2
+  }
+ ],
+ "out_files": [
+  "run.txt",
+  "sha256.txt",
+  "stdout_probe.txt",
+  "versions.txt"
+ ],
+ "out_files_total": 4,
+ "out_skipped": [],
+ "upload_skipped": [],
+ "summary_tail": "[run-02-cd stdout] TPROBE_SEARCH q='410472 PHYSLITE' hits=0\nTPROBE_SEARCH q='410472' hits=0\nTPROBE_SEARCH q='PhPy8EG_A14_ttbar_hdamp258p75_dil' hits=0\nTPROBE_VERDICT NO_RECORD\nTPROBE_SEARCH q='410472 PHYSLITE' hits=0\nTPROBE_SEARCH q='410472' hits=0\nTPROBE_SEARCH q='PhPy8EG_A14_ttbar_hdamp258p75_dil' hits=0\nTPROBE_VERDICT NO_RECORD\n",
+ "paths": {
+  "workdir": "/work (copy of E:\\MV2-Pursuit\\work\\20261124T100542Z-science\\truthprobe)",
+  "out": "/out -> out/",
+  "data": "/data (docker volume mv2c-data-atlas-physlite-ttbar-probe, kept for later jobs)"
+ },
+ "note": ""
+}
