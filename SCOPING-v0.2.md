@@ -29,3 +29,11 @@ read 2026-11-24). Standard PHYSLITE has a `TruthTop` container (coffea PHYSLITES
 410472), whether `TruthTop` kinematics can be read, give a truth m(tt) per event, and carry
 `eventNumber` for matching. Its verdict decides whether a v0.2 pre-registration is worth writing.
 It is a feasibility probe only; nothing in it is graded.
+
+## Update 2026-11-25: probe v1 returned NO_RECORD (probe defect); v2 queued
+truthprobe-v1 found no record because the paragraph above names the wrong sample: the nominal
+sample behind ttthresh-v2 is DSID **410470** (`PhPy8EG_A14_ttbar_hdamp258p75_nonallhad`), not
+410472, and the portal's search does not index DSIDs. The sample is in
+[CERN Open Data record 80017](https://opendata.cern.ch/record/80017) (190 PHYSLITE files,
+478.6 GB). See `results/truthprobe-v1/NOTE.md`. `probes/truthprobe-v2/` (truthprobe 0.2.0) reads
+that record directly. Its verdict still decides whether a v0.2 pre-registration gets written.
