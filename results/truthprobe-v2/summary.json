@@ -1,0 +1,62 @@
+{
+ "contract": "mv2-compete-result-v1",
+ "name": "truthprobe-v2",
+ "id": "85d5a613ac68",
+ "field": "science",
+ "run": "20261125T012316Z-science",
+ "kind": "compete",
+ "status": "ok",
+ "reason": "",
+ "host": "blade",
+ "image": "python:3.12",
+ "started_at": "2026-11-25T19:18:24.041697+00:00",
+ "finished_at": "2026-11-25T19:28:10.654535+00:00",
+ "duration_seconds": 586,
+ "limits": {
+  "cpu": 1.0,
+  "memory_gb": 1.5,
+  "timeout_minutes": 120.0
+ },
+ "peak_memory_gb": null,
+ "network": {
+  "setup": true,
+  "run": true
+ },
+ "steps": [
+  {
+   "step": "setup-01-pip",
+   "cmd": "pip install -q -r requirements.txt",
+   "exit": 0,
+   "seconds": 12
+  },
+  {
+   "step": "run-01-cd",
+   "cmd": "cd /work && python -m py_compile truthprobe.py && pip freeze | grep -iE '^(numpy|awkward|uproot|fsspec|aiohttp)==' | tee /out/versions.txt && sha256sum truthprobe.py requirements.txt | tee /out/sha256.txt",
+   "exit": 0,
+   "seconds": 2
+  },
+  {
+   "step": "run-02-cd",
+   "cmd": "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python truthprobe.py --data-dir /data --out-dir /out > /out/stdout_probe.txt 2>&1; rc=$?; grep -E '^TPROBE_' /out/stdout_probe.txt | cut -c1-600; tail -n 30 /out/stdout_probe.txt | cut -c1-600; exit $rc",
+   "exit": 0,
+   "seconds": 19
+  }
+ ],
+ "out_files": [
+  "mtt_sample.csv",
+  "run.txt",
+  "sha256.txt",
+  "stdout_probe.txt",
+  "versions.txt"
+ ],
+ "out_files_total": 5,
+ "out_skipped": [],
+ "upload_skipped": [],
+ "summary_tail": "[run-02-cd stdout] thP\nTPROBE_TOP_BRANCHES {\"px\": \"TruthTopAuxDyn.px\", \"py\": \"TruthTopAuxDyn.py\", \"pz\": \"TruthTopAuxDyn.pz\", \"e\": \"TruthTopAuxDyn.e\", \"m\": \"TruthTopAuxDyn.m\", \"pt\": null, \"eta\": null, \"phi\": null, \"pdgId\": \"TruthTopAuxDyn.pdgId\", \"status\": \"TruthTopAuxDyn.status\"}\nTPROBE_TOPS read 3000 | both t and tbar 1.0000 | pdgId+6 count per event median 2 max 4\n/usr/local/lib/python3.12/site-packages/numpy/core/fromnumeric.py:771: UserWarning: Warning: 'partition' will ignore the 'mask' of the MaskedArray.\n  a.partition(kth, axis=axis, kind=kind, order=order)\n/usr/local/lib/python3.12/site-packages/numpy/lib/function_base.py:4824: UserWarning: Warning: 'partition' will ignore the 'mask' of the MaskedArray.\n  arr.partition(\nTPROBE_MTT GeV quantiles(0,5,20,50,80,95,100) 291.3 358.6 394.2 471.3 614.2 882.9 2036.2 | frac<350 0.0187 | frac<2mt(345) 0.0093\nTPROBE_EVENTINFO [\"EventInfoAuxDyn.eventNumber\", \"EventInfoAuxDyn.mcChannelNumber\", \"EventInfoAuxDyn.mcEventWeights\"]\nTPROBE_EVENTINFO first eventNumbers 334982429 334982397 334982419 334982437 334982411\nTPROBE_COST needed branches 122.9 MB in this file (819.5 bytes/event); whole sample about 27.00 GB if all files are similar\nTPROBE_VERDICT FEASIBLE\n",
+ "paths": {
+  "workdir": "/work (copy of E:\\MV2-Pursuit\\work\\20261125T012316Z-science\\truthprobe)",
+  "out": "/out -> out/",
+  "data": "/data (docker volume mv2c-data-atlas-physlite-ttbar-probe, kept for later jobs)"
+ },
+ "note": ""
+}
