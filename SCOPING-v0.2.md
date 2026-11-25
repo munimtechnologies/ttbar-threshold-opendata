@@ -37,3 +37,25 @@ sample behind ttthresh-v2 is DSID **410470** (`PhPy8EG_A14_ttbar_hdamp258p75_non
 [CERN Open Data record 80017](https://opendata.cern.ch/record/80017) (190 PHYSLITE files,
 478.6 GB). See `results/truthprobe-v1/NOTE.md`. `probes/truthprobe-v2/` (truthprobe 0.2.0) reads
 that record directly. Its verdict still decides whether a v0.2 pre-registration gets written.
+
+## Update 2026-11-25 (later): the education side of the match exists
+The branch table of the 2025 education release
+([13TeV25_details](https://opendata.atlas.cern/docs/data/for_education/13TeV25_details), read
+2026-11-25 03:30 UTC) lists `runNumber` (unsigned int), `eventNumber` (unsigned long long) and
+`channelNumber` (unsigned int, the DSID) for every event, plus truth electrons, muons, photons,
+taus, jets and MET, and still no parton-level or top-quark truth branch. The page describes the
+education samples as a simplified form of the 2024 open data for research. So a per-event match
+education -> PHYSLITE is possible in principle on the key (channelNumber, eventNumber); whether
+it works in practice (every selected education event found exactly once in record 80017) is not
+known until it is tried. Things a v0.2 pre-registration must fix in advance if truthprobe-v2 says
+FEASIBLE:
+- match key (channelNumber, eventNumber), with runNumber kept as a check; duplicate keys inside
+  record 80017 are counted and such events dropped, never resolved by choice;
+- a gate on the match rate of the ttthresh-v2-selected nominal events (a value fixed before the
+  match is run), because an education event missing from the research release would bias the
+  truth split;
+- the truth m(tt) bins (one bin at and below threshold, fixed before any truth number is seen by
+  this project beyond truthprobe-v2's quantiles from 3,000 unselected events);
+- that the data side is already known (ttthresh-v2), so v0.2 can only pre-specify the method that
+  turns the known detector-level excess into a truth-mass split, and must say so.
+No job or pre-registration was filed for this today.
