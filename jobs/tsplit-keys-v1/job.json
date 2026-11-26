@@ -1,0 +1,22 @@
+{
+  "name": "tsplit-keys-v1",
+  "kind": "compete",
+  "workdir": "E:/MV2-Pursuit/work/20261126T043442Z-science/tsplit-keys",
+  "image": "python:3.12",
+  "setup": ["pip install -q -r requirements.txt"],
+  "run": [
+    "cd /work && python -m py_compile keys_job.py prep.py test_keys_job.py && python -m unittest -v test_keys_job > /out/keys_tests.txt 2>&1; rc=$?; cat /out/keys_tests.txt; exit $rc",
+    "cd /work && python prep.py --work /work > /out/prep.txt 2>&1; rc=$?; cat /out/prep.txt; exit $rc",
+    "cd /work && python fix_ttthresh.py --dest /work/src --reqs /work/requirements.txt > /out/fix.txt 2>&1; rc=$?; cat /out/fix.txt; exit $rc",
+    "cd /work/src && python -m unittest -v test_ttthresh_core > /out/tests_ttthresh.txt 2>&1; rc=$?; cat /out/tests_ttthresh.txt; exit $rc",
+    "cd /work/tsplit && python -m unittest -v test_tsplit_core > /out/tests_tsplit.txt 2>&1; rc=$?; cat /out/tests_tsplit.txt; exit $rc",
+    "cd /work && sha256sum keys_job.py prep.py test_keys_job.py requirements.txt fix_ttthresh.py src/ttthresh_core.py src/ttthresh_job.py tsplit/tsplit_core.py tsplit/test_tsplit_core.py | tee /out/sha256.txt",
+    "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python keys_job.py --src /work/src --tsplit /work/tsplit --data-dir /data --out /out > /out/run.txt 2>&1; rc=$?; grep -E '^KEYS_' /out/run.txt; tail -n 30 /out/run.txt; exit $rc"
+  ],
+  "network": true,
+  "data_urls": [],
+  "data_key": "atlas13tev25-2j2lmet30",
+  "cpu": 1,
+  "memory_gb": 2,
+  "timeout_minutes": 120
+}
