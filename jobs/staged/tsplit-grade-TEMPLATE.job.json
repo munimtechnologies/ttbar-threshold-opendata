@@ -1,0 +1,20 @@
+{
+  "_comment": "STAGED, NOT FILED. File only after all six tsplit-match parts have returned and their out/* files are committed to results/tsplit-match-{nom-p0..p3,ph7,pth1}-v1/ (a part re-run as -v2 needs --part-dir group:part=results/<folder>). Replace REF (full 40-hex sha of a commit that already holds every input; WebFetch github.com/munimtechnologies/ttbar-threshold-opendata/commits/main) and TSPLIT_SHA256 (from compete-results/tsplit-keys-v1/out/prep.txt line PREP_RECORDED tsplit/tsplit_core.py sha256=...). Copy tsplit-grade/{grade_job.py,test_grade_job.py,requirements.txt} into the new run folder as workdir. Name tsplit-grade-v1. Remove this _comment key before filing.",
+  "name": "tsplit-grade-v1",
+  "kind": "compete",
+  "workdir": "E:/MV2-Pursuit/work/<RUN>/tsplit-grade",
+  "image": "python:3.12",
+  "setup": ["pip install -q -r requirements.txt"],
+  "run": [
+    "cd /work && python -m py_compile grade_job.py test_grade_job.py && python -m unittest -v test_grade_job > /out/grade_tests.txt 2>&1; rc=$?; cat /out/grade_tests.txt; exit $rc",
+    "cd /work && sha256sum grade_job.py test_grade_job.py requirements.txt | tee /out/sha256.txt && pip freeze | grep -iE '^numpy==' | tee /out/versions.txt",
+    "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python grade_job.py --ref REF --tsplit-sha256 TSPLIT_SHA256 --work /work --out /out > /out/run.txt 2>&1; rc=$?; grep -E '^(GRADE_|FATAL)' /out/run.txt | cut -c1-700; tail -n 10 /out/run.txt | cut -c1-600; exit $rc",
+    "cd /work && mkdir -p tsplit && cp tsplit-pinned/tsplit_core.py tsplit/ && python -m unittest -v test_grade_job > /out/grade_tests_core.txt 2>&1; rc=$?; tail -n 5 /out/grade_tests_core.txt; exit $rc"
+  ],
+  "network": true,
+  "data_urls": [],
+  "data_key": "tsplit-grade",
+  "cpu": 1,
+  "memory_gb": 1,
+  "timeout_minutes": 60
+}
