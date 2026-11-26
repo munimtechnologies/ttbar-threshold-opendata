@@ -1,0 +1,5 @@
+numpy==1.26.4
+awkward==2.6.7
+uproot==5.3.10
+fsspec==2024.6.1
+aiohttp==3.9.5

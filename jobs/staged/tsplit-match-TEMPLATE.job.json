@@ -1,0 +1,20 @@
+{
+  "_comment": "STAGED, NOT FILED. File only after tsplit-keys-v1 returns with KEYS_XCHECK OK x3 and G0 PASS and keys_T.csv.gz is committed to results/tsplit-keys-v1/. Replace KEYS_COMMIT (full 40-hex sha of the commit that added results/tsplit-keys-v1/keys_T.csv.gz; WebFetch github.com/munimtechnologies/ttbar-threshold-opendata/commits/main), KEYS_SHA256 (its sha256 if known, else the word record) and TSPLIT_SHA256 (from compete-results/tsplit-keys-v1/out/prep.txt line PREP_RECORDED tsplit/tsplit_core.py sha256=...). Copy tsplit-match/{match_job.py,test_match_job.py,requirements.txt} into the new run folder as workdir. Six jobs: GROUP/PART/NPARTS = nom 0..3 /4, ph7 0/1, pth1 0/1; names tsplit-match-nom-p0-v1 ... tsplit-match-ph7-v1, tsplit-match-pth1-v1. Remove this _comment key before filing.",
+  "name": "tsplit-match-GROUP-pPART-v1",
+  "kind": "compete",
+  "workdir": "E:/MV2-Pursuit/work/<RUN>/tsplit-match",
+  "image": "python:3.12",
+  "setup": ["pip install -q -r requirements.txt"],
+  "run": [
+    "cd /work && python -m py_compile match_job.py test_match_job.py && python -m unittest -v test_match_job > /out/match_tests.txt 2>&1; rc=$?; cat /out/match_tests.txt; exit $rc",
+    "cd /work && sha256sum match_job.py test_match_job.py requirements.txt | tee /out/sha256.txt && pip freeze | grep -iE '^(numpy|awkward|uproot|fsspec|aiohttp)==' | tee /out/versions.txt",
+    "cd /work && OMP_NUM_THREADS=1 OPENBLAS_NUM_THREADS=1 MKL_NUM_THREADS=1 python match_job.py --group GROUP --part PART --nparts NPARTS --keys-sha256 KEYS_SHA256 --keys-ref KEYS_COMMIT --tsplit-sha256 TSPLIT_SHA256 --work /work --out /out > /out/run.txt 2>&1; rc=$?; grep -E '^MATCH_(KEYS|INDEX|PIN|VERSIONS|DONE|FATAL)' /out/run.txt | cut -c1-600; tail -n 15 /out/run.txt | cut -c1-600; exit $rc",
+    "cd /work && python -m unittest -v test_match_job > /out/match_tests_core.txt 2>&1; rc=$?; tail -n 5 /out/match_tests_core.txt; exit $rc"
+  ],
+  "network": true,
+  "data_urls": [],
+  "data_key": "tsplit-match",
+  "cpu": 1,
+  "memory_gb": 2,
+  "timeout_minutes": 300
+}
