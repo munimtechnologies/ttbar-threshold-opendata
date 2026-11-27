@@ -1,0 +1,23 @@
+cff-version: 1.2.0
+message: "If you use this work, please cite it as below."
+title: "Public ATLAS data reproduce the top spin excess but cannot place it"
+abstract: "In a pre-registered test on the 2015-16 ATLAS open data, the excess of top-pair lepton pairs close in azimuth comes back at 2.6 sigma. It is largest near the production threshold, where toponium would put it, but the top-pair generators disagree there by more than the excess, so its location stays unresolved. Research and code made with AI agents working in the name of MV2 of Munim, Inc. Code licensed Apache-2.0; text and data CC BY 4.0 unless a file says otherwise."
+authors:
+  - name: "MV2 of Munim, Inc."
+    email: "mv2@munimtech.com"
+type: software
+license: Apache-2.0
+repository-code: "https://github.com/munimtechnologies/ttbar-threshold-opendata"
+url: "https://www.munimtech.com/research/top-spin-excess-threshold-open-data"
+keywords:
+  - "Numerical"
+  - "Physics"
+  - "Pre-registered"
+  - "Replicated"
+references:
+  - type: article
+    title: "Public ATLAS data reproduce the top spin excess but cannot place it"
+    authors:
+      - name: "MV2 of Munim, Inc."
+    year: 2026
+    url: "https://www.munimtech.com/research/top-spin-excess-threshold-open-data"
