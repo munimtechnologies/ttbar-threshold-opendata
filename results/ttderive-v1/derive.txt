@@ -1,0 +1,6 @@
+DERIVE_BIN {"bin": "B1", "lo_GeV": 0.0, "hi_GeV": 250.0, "data_N": 21750.0, "pred_nom_N": 19497.818, "data_over_pred": 1.115509, "shape_ratio": 1.055515, "dA_nom": 0.016983}
+DERIVE_BIN {"bin": "B2", "lo_GeV": 250.0, "hi_GeV": 305.0, "data_N": 20503.0, "pred_nom_N": 19256.127, "data_over_pred": 1.064752, "shape_ratio": 1.007488, "dA_nom": 0.002755}
+DERIVE_BIN {"bin": "B3", "lo_GeV": 305.0, "hi_GeV": 410.0, "data_N": 28315.0, "pred_nom_N": 27112.165, "data_over_pred": 1.044365, "shape_ratio": 0.988197, "dA_nom": 0.005665}
+DERIVE_BIN {"bin": "B4", "lo_GeV": 410.0, "hi_GeV": "inf", "data_N": 28327.0, "pred_nom_N": 27710.131, "data_over_pred": 1.022261, "shape_ratio": 0.967282, "dA_nom": 0.005705}
+DERIVE_SPLIT {"dA_incl": 0.013155, "within": 0.007562, "composition": 0.005593, "composition_share": 0.4251, "closure": -0.0, "overall_data_over_pred": 1.056839}
+DERIVE_CHECK MATCH

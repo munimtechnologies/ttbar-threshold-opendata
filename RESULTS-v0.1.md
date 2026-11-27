@@ -71,8 +71,9 @@ H3 ROBUST (prior 30 %) came out stronger than we expected.
 ## Information only (post hoc, not graded)
 
 Computed after the grades by `results/ttthresh-v2/derive_v2.py` from `results.json`; the values in
-`results/ttthresh-v2/derived_v2.csv` were first computed by hand and are re-checked by the
-machine job `ttderive-v1` (pending at the time of writing).
+`results/ttthresh-v2/derived_v2.csv` were first computed by hand and were re-checked by the
+machine job `ttderive-v1` on 2026-11-27: the machine output matches the hand CSV in every cell
+(`DERIVE_CHECK MATCH`; outputs and note in `results/ttderive-v1/`).
 
 * Yield shape: data/prediction is 1.116 in B1, 1.065 in B2, 1.044 in B3 and 1.022 in B4; after
   removing the overall 1.057 normalisation, data have 5.6 % more events than predicted in the

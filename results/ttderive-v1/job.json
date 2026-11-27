@@ -1,0 +1,33 @@
+{
+ "source": "E:\\MV2-Pursuit\\work\\20261124T073751Z-science\\compete\\ttderive\\job.json",
+ "normalized": {
+  "id": "ebf6b2c0f1ff",
+  "name": "ttderive-v1",
+  "job_path": "E:\\MV2-Pursuit\\work\\20261124T073751Z-science\\compete\\ttderive\\job.json",
+  "run": "20261124T073751Z-science",
+  "field": "science",
+  "kind": "compete",
+  "workdir": "E:\\MV2-Pursuit\\work\\20261124T073751Z-science\\ttthresh",
+  "image": "python:3.12",
+  "run_network": true,
+  "network": true,
+  "setup": [],
+  "run_steps": [
+   {
+    "name": "run-01-cd",
+    "cmd": "cd /work && python -m py_compile derive_v2.py && python -c \"import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/munimtechnologies/ttbar-threshold-opendata/main/results/ttthresh-v2/results.json', '/out/results.json')\" && sha256sum /out/results.json derive_v2.py derived_v2.csv | tee /out/sha256.txt",
+    "timeout_seconds": 0
+   },
+   {
+    "name": "run-02-cd",
+    "cmd": "cd /work && python derive_v2.py /out/results.json --out /out/derived_machine.csv --check derived_v2.csv > /out/derive.txt 2>&1; rc=$?; cat /out/derive.txt; exit $rc",
+    "timeout_seconds": 0
+   }
+  ],
+  "data_urls": [],
+  "data_key": "ttderive-none",
+  "cpu": 1,
+  "memory_gb": 1,
+  "timeout_minutes": 20.0
+ }
+}

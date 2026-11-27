@@ -1,0 +1,55 @@
+{
+ "contract": "mv2-compete-result-v1",
+ "name": "ttderive-v1",
+ "id": "ebf6b2c0f1ff",
+ "field": "science",
+ "run": "20261124T073751Z-science",
+ "kind": "compete",
+ "status": "ok",
+ "reason": "",
+ "host": "dell",
+ "image": "python:3.12",
+ "started_at": "2026-11-27T12:49:30.027185+00:00",
+ "finished_at": "2026-11-27T12:56:21.569968+00:00",
+ "duration_seconds": 411,
+ "limits": {
+  "cpu": 1.0,
+  "memory_gb": 1.0,
+  "timeout_minutes": 20.0
+ },
+ "peak_memory_gb": null,
+ "network": {
+  "setup": null,
+  "run": true
+ },
+ "steps": [
+  {
+   "step": "run-01-cd",
+   "cmd": "cd /work && python -m py_compile derive_v2.py && python -c \"import urllib.request; urllib.request.urlretrieve('https://raw.githubusercontent.com/munimtechnologies/ttbar-threshold-opendata/main/results/ttthresh-v2/results.json', '/out/results.json')\" && sha256sum /out/results.json derive_v2.py derived_v2.csv | tee /out/sha256.txt",
+   "exit": 0,
+   "seconds": 1
+  },
+  {
+   "step": "run-02-cd",
+   "cmd": "cd /work && python derive_v2.py /out/results.json --out /out/derived_machine.csv --check derived_v2.csv > /out/derive.txt 2>&1; rc=$?; cat /out/derive.txt; exit $rc",
+   "exit": 0,
+   "seconds": 0
+  }
+ ],
+ "out_files": [
+  "derive.txt",
+  "derived_machine.csv",
+  "results.json",
+  "sha256.txt"
+ ],
+ "out_files_total": 4,
+ "out_skipped": [],
+ "upload_skipped": [],
+ "summary_tail": "[run-02-cd stdout] DERIVE_BIN {\"bin\": \"B1\", \"lo_GeV\": 0.0, \"hi_GeV\": 250.0, \"data_N\": 21750.0, \"pred_nom_N\": 19497.818, \"data_over_pred\": 1.115509, \"shape_ratio\": 1.055515, \"dA_nom\": 0.016983}\nDERIVE_BIN {\"bin\": \"B2\", \"lo_GeV\": 250.0, \"hi_GeV\": 305.0, \"data_N\": 20503.0, \"pred_nom_N\": 19256.127, \"data_over_pred\": 1.064752, \"shape_ratio\": 1.007488, \"dA_nom\": 0.002755}\nDERIVE_BIN {\"bin\": \"B3\", \"lo_GeV\": 305.0, \"hi_GeV\": 410.0, \"data_N\": 28315.0, \"pred_nom_N\": 27112.165, \"data_over_pred\": 1.044365, \"shape_ratio\": 0.988197, \"dA_nom\": 0.005665}\nDERIVE_BIN {\"bin\": \"B4\", \"lo_GeV\": 410.0, \"hi_GeV\": \"inf\", \"data_N\": 28327.0, \"pred_nom_N\": 27710.131, \"data_over_pred\": 1.022261, \"shape_ratio\": 0.967282, \"dA_nom\": 0.005705}\nDERIVE_SPLIT {\"dA_incl\": 0.013155, \"within\": 0.007562, \"composition\": 0.005593, \"composition_share\": 0.4251, \"closure\": -0.0, \"overall_data_over_pred\": 1.056839}\nDERIVE_CHECK MATCH\n",
+ "paths": {
+  "workdir": "/work (copy of E:\\MV2-Pursuit\\work\\20261124T073751Z-science\\ttthresh)",
+  "out": "/out -> out/",
+  "data": "/data (docker volume mv2c-data-ttderive-none, kept for later jobs)"
+ },
+ "note": ""
+}
